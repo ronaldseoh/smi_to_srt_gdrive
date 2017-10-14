@@ -1,2 +1,4 @@
 .vscode
 .mypy_cache
+client_secrets.json
+__pycache__
