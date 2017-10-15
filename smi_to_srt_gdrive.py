@@ -8,11 +8,14 @@ from convert import convertSMI
 
 class GDriveSmiToSrtConverter(object):
 
-    def __init__(self):
-        self.gauth = GoogleAuth()
-        self.gauth.CommandLineAuth()
+    def __init__(self, gdrive=None):
+        if gdrive != None:
+            self.gdrive = gdrive
+        else:
+            self.gauth = GoogleAuth()
+            self.gauth.CommandLineAuth()
 
-        self.gdrive = GoogleDrive(self.gauth)
+            self.gdrive = GoogleDrive(self.gauth)
 
     def select_target_files(self, target_files=None):
 
