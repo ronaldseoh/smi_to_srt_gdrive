@@ -168,7 +168,7 @@ class GDriveSmiToSrtConverter(object):
 
             for file in self.target_files:
                 # See if a srt file already exists for the target
-                smi_title_extension_index  = file['title'].lower().rfind('.smi')
+                smi_title_extension_index = file['title'].lower().rfind('.smi')
                 srt_title = file['title'][0:smi_title_extension_index] + '.srt'
 
                 existing_srt_file_query = "trashed=false and ("
@@ -180,12 +180,23 @@ class GDriveSmiToSrtConverter(object):
 
                 existing_srt_file_query += ") and title contains '" + srt_title + "'"
 
-                existing_srt_file = self.gdrive.ListFile(
-                    {
-                        'q': existing_srt_file_query,
-                        'orderBy': 'title'
-                    }
-                ).GetList()
+                try:
+                    # TODO: existing_srt_file_query seems to be failing
+                    # when srt_title contains special characters such as 
+                    # single quotation marks. Currently looking for a simple solution.
+                    existing_srt_file = self.gdrive.ListFile(
+                        {
+                            'q': existing_srt_file_query
+                        }
+                    ).GetList()
+
+                except Exception as e:
+                    print(str(e))
+                    print(
+                        "WARNING: Existing SRT file search failed for " 
+                        + file['title'] + ". Will try to force convert this file."
+                    )
+                    existing_srt_file = ''
 
                 if len(existing_srt_file) > 0:
                     print(srt_title + " already exists in the same directory. Skipping.")
@@ -200,6 +211,7 @@ class GDriveSmiToSrtConverter(object):
                     time.sleep(0.5)
 
                     conversion_thread.start()
+
         else:
             print("ERROR: target_files has not been specified. Please run select_target_files().")
 
