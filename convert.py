@@ -4,7 +4,7 @@
 This code is a modified version of convert.py, originally written by
 MoonChang Chae (http://egloos.zum.com/mcchae/v/10763080) (the filename was smi2srt.py on the original version)
 and revised by taylor224 (https://gist.github.com/taylor224/4c80ad3d047af48aa4a0cc64baee22aa).
-The code was modified to be compatible with Python 3 Interpreters.
+The code was modified to be compatible with Python 3 interpreters.
 
 The license for the original work is not clear, but presumed to be GPLv2 or GPLv3 based on the line 9 of
 smi2srt.py. Since GPLv3 was the latest version of GPL when the original code was released, 
